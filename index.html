@@ -2,26 +2,55 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=H, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="style.css">
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Weather Application</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles.css" />
+  <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
 </head>
 
 <body>
-  <h1>
-    Hello GitHub Pages! It is a great page to learn how to use GitHub Pages. We are moving to Netlify!
-  </h1>
+  <div class="weather-app">
+    <header>
+      <form id="search-form">
+        <input type="search" placeholder="Enter a city.." required class="search-input" id="search-input" />
+        <input type="submit" value="Search" class="search-button" />
+      </form>
+    </header>
 
-  <input type="email" placeholder="Enter your email" />
-  <input type="password" placeholder="Enter your password" />
-  <input type="submit" value="Login" />
+    <main>
+      <div class="current-weather">
+        <div>
+          <h1 class="current-city" id="current-city">Loading...</h1>
+          <p class="current-details">
+            <span id="current-date">Now</span><br />
+            Humidity: <strong id="humidity">--%</strong>, Wind:
+            <strong id="wind">-- km/h</strong>
+          </p>
+        </div>
+        <div class="current-temperature">
+          <span class="current-temperature-icon">☀️</span>
+          <span class="current-temperature-value">--</span>
+          <span class="current-temperature-unit">°C</span>
+        </div>
+      </div>
+    </main>
 
-  <form>
+    <footer>
+      <p>
+        This project was coded by
+        <a href="https://github.com/SheillaO" target="_blank">Sheilla Olga </a> and is
+        <a href="https://github.com/SheillaO/Weather-App-SheCodes" target="_blank">on GitHub</a> and
+        <a href="https://adesheilla.netlify.app/" target="_blank">hosted on Netlify</a>
 
-    <script src="index.js"></script>
+      </p>
+    </footer>
+  </div>
+
+  <script src="src/index.js"></script>
 </body>
 
 </html>
