@@ -1,3 +1,22 @@
+function displayTemperature(response) {
+  let temperatureElement = document.querySelector("#current-temperature");
+  let temperature = Math.round(response.data.temperature.current);
+  let cityElement = document.querySelector("#current-city");
+  cityElement.innerHTML = response.data.city;
+  temperatureElement.innerHTML = temperature;
+}
+
+function search(event) {
+  event.preventDefault();
+  let searchInputElement = document.querySelector("#search-input");
+  let city = searchInputElement.value;
+
+  let apiKey = "7601b0fff0179o9d5059a8db34ctbc66";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(displayTemperature);
+}
+
 function formatDate(date) {
   let minutes = date.getMinutes();
   let hours = date.getHours();
@@ -21,53 +40,14 @@ function formatDate(date) {
     "Saturday",
   ];
 
-  return `${days[day]} ${hours}:${minutes}`;
+  let formattedDay = days[day];
+  return `${formattedDay} ${hours}:${minutes}`;
 }
-
-function displayTemperature(response) {
-  let temperature = Math.round(response.data.temperature.current);
-  let city = response.data.city;
-  let humidity = response.data.temperature.humidity;
-  let windSpeed = Math.round(response.data.wind.speed);
-  let icon = response.data.condition.icon_url;
-
-  document.querySelector("#current-city").innerHTML = city;
-  document.querySelector(".current-temperature-value").innerHTML = temperature;
-  document.querySelector("#humidity").innerHTML = `${humidity}%`;
-  document.querySelector("#wind").innerHTML = `${windSpeed} km/h`;
-  document.querySelector(
-    ".current-temperature-icon"
-  ).innerHTML = `<img src="${icon}" alt="Weather icon" width="50" />`;
-  document.querySelector(".current-temperature-unit").innerHTML = "°C";
-}
-
-function searchCity(city) {
-  let apiKey = "7601b0fff0179o9d5059a8db34ctbc66";
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-  axios
-    .get(apiUrl)
-    .then(displayTemperature)
-    .catch(() => {
-      document.querySelector("#current-city").innerHTML = "City not found";
-      document.querySelector(".current-temperature-value").innerHTML = "--";
-      document.querySelector("#humidity").innerHTML = "--%";
-      document.querySelector("#wind").innerHTML = "-- km/h";
-      document.querySelector(".current-temperature-icon").textContent = "❌";
-      document.querySelector(".current-temperature-unit").innerHTML = "";
-    });
-}
-
-function handleSearch(event) {
-  event.preventDefault();
-  let searchInputElement = document.querySelector("#search-input");
-  document.querySelector("#current-city").innerHTML = "Loading...";
-  searchCity(searchInputElement.value);
-}
-
-let currentDateElement = document.querySelector("#current-date");
-currentDateElement.innerHTML = formatDate(new Date());
 
 let searchForm = document.querySelector("#search-form");
-searchForm.addEventListener("submit", handleSearch);
+searchForm.addEventListener("submit", search);
 
-searchCity("Nairobi");
+let currentDateElement = document.querySelector("#current-date");
+let currentDate = new Date();
+
+currentDateElement.innerHTML = formatDate(currentDate);
